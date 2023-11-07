@@ -3,9 +3,9 @@ from mpl_toolkits.mplot3d import Axes3D
 
 # Codigo de exemplo pra o calculo do centro de gravidade de 3 ou mais objetos combinados
 # Por exemplo, um aviao: corpo e asas, cada um com peso e centro gravidades
-# o resultado final deve ser o centro de gravidade do objeto como todo
+# o resultado final deve ser o centro de gravidade do objeto corrigido com base no agrupamento do todo
 
-# por que so me interesso por coisa dificil -_-
+# por que so me interesso por coisa dificil? -_-
 
 
 class PointMass:
