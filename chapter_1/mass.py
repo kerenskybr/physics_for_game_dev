@@ -44,7 +44,7 @@ def center_gravity(*args, Mt):
 
     print(f"{round(cg, 2)} m")
 
-    return round(cg)
+    return round(cg, 2)
 
 
 def moment_of_inertia(W, w, L, G=9.81):
@@ -59,6 +59,32 @@ def moment_of_inertia(W, w, L, G=9.81):
     result = ((W / G) / 12) * (w ** 2 + L ** 2)
 
     print(f"{round(result, 2)} - s² - m")
+
+    return round(result, 2)
+
+
+def distance_from_body_center(Xcg1, Xcg, Ycg1, Ycg):
+    result = ((Xcg1 - Xcg) ** 2) + ((Ycg1 - Ycg) ** 2)
+
+    print(f"{round(result, 2)} m²")
+
+    return round(result, 2)
+
+
+def parallel_axis_theorem(Io, m, d, G=9.81):
+    """
+    Icg  = Io + md2
+
+    Io = Inercia calculada em moment_of_inertia()
+    m = Massa em N
+    d = distancia calculada em distance_from_body_center()
+    G = gravidade
+
+    """ 
+
+    result = Io + m / G  * d
+
+    print(f"{round(result, 2)} N − s² − m")
 
     return round(result, 2)
 
@@ -93,3 +119,25 @@ if __name__ == "__main__":
 
     # inercia do tanque combustivel
     i_o_comb = moment_of_inertia(w_fuel_tank, 0.9, 0.5)
+
+    # Encontra a distancia do centro de cada objeto do centro de gravidade do corpo
+    dist_car = distance_from_body_center(30.5, x_cg, 30.5, y_cg)
+    dist_driver = distance_from_body_center(31.5, x_cg, 31.0, y_cg)
+    dist_fuel = distance_from_body_center(28.0, x_cg, 30.5, y_cg)
+
+    # parallel axis theorem
+    icg_car = parallel_axis_theorem(i_o_car, 17500, dist_car)
+    icg_driver = parallel_axis_theorem(i_o_motora, 850, dist_driver)
+    icg_fuel = parallel_axis_theorem(i_o_comb, w_fuel_tank, dist_fuel)
+
+    icg_total = icg_car + icg_driver + icg_fuel
+    #print(f"Total inertia for the car: {icg_total} N – s2 – m")
+    print("\n " * 2)
+    print("-" * 80)
+    print(f"| {'Property':<50} | {'Computed value':<20}    |")
+    print("-" * 80)
+    print(f"| {'Total mass (weight)':<50} | {m_total[1]} Kg {m_total[0]} N         |")
+    print(f"| {'Combined center of mass location':<50} | (x,y) = {x_cg}m, {y_cg}m  |")
+    print(f"| {'Mass moment of inertia':<50} | {icg_total} N – s² – m       |")
+    print("-" * 80)
+
